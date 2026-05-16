@@ -1,87 +1,48 @@
-# SHL AI Assessment Recommendation System
+# 🚀 SHL AI Assessment Recommendation System
 
-## Overview
+## 📌 Overview
+This project is a FastAPI-based intelligent recommendation system that suggests relevant SHL assessments based on natural language job descriptions. It extracts skill intent (technical and business domains) and ranks assessments using a weighted scoring algorithm.
 
-This project is an AI-powered recommendation system for SHL assessments.
-
-It supports:
-- conversational assessment recommendations
-- semantic search using embeddings
-- assessment comparison
-- stateless chat interactions
-- prompt injection protection
-
-The system uses FastAPI as the backend and FAISS vector search for semantic retrieval.
+The system is deployed as a production-ready REST API on Render.
 
 ---
 
-## Features
+## 🎯 Key Features
 
-### 1. Conversational Recommendations
-Users can provide hiring requirements in natural language.
-
-Example:
-- "Hiring a .NET developer with accounting skills"
-
-The system returns relevant SHL assessments.
-
----
-
-### 2. Semantic Search
-The project uses:
-- sentence-transformers
-- FAISS vector indexing
-
-to retrieve semantically relevant assessments.
+- 🔍 Natural language understanding of job roles
+- ⚖️ Hybrid skill detection (Technical + Finance/Business)
+- 📊 Weighted scoring-based recommendation engine
+- 🔁 Comparison mode for evaluating two skill domains
+- ⚡ Lightweight design optimized for low-memory deployment
+- 🌐 Fully deployed REST API (Render)
 
 ---
 
-### 3. Comparison Support
-Users can compare assessments.
+## 🧠 How It Works
 
-Example:
-- "Compare .NET Framework and ADO.NET assessments"
+1. User sends job description via `/chat` API
+2. System extracts keywords from input text
+3. Skills are categorized into:
+   - Technical (e.g., .NET, backend, API, Python)
+   - Business (e.g., accounting, finance, audit)
+4. Each assessment is scored using:
+   - Keyword matching
+   - Domain relevance boosting
+   - Cross-skill hybrid scoring
+5. Top recommendations are returned
 
 ---
 
-### 4. Guardrails
-The system rejects:
-- off-topic questions
-- prompt injection attempts
+## 🏗️ Tech Stack
 
----
-
-## Tech Stack
-
-- Python
+- Python 3.10+
 - FastAPI
-- FAISS
-- Sentence Transformers
-- Selenium
-- BeautifulSoup
+- Pydantic
+- JSON-based dataset (no heavy ML models for deployment stability)
+- Render (deployment platform)
 
 ---
 
-## API Endpoints
+## 📡 API Endpoints
 
-### Health Check
-
-GET /health
-
----
-
-### Chat Endpoint
-
-POST /chat
-
-Example request:
-
-```json
-{
-  "messages": [
-    {
-      "role": "user",
-      "content": "Hiring backend software engineer with finance knowledge"
-    }
-  ]
-}
+### 🔹 Health Check
