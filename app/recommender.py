@@ -20,23 +20,22 @@ def get_model():
     return model
 
 
-def recommend_assessments(user_query):
+def recommend_assessments(query, catalog):
+    query = query.lower()
 
-    model = get_model()
+    results = []
 
-    query_embedding = model.encode([user_query])
-    query_embedding = np.array(query_embedding).astype("float32")
+    for item in catalog:
+        name = item["name"].lower()
 
-    distances, indices = index.search(query_embedding, 10)
+        score = 0
+        for word in query.split():
+            if word in name:
+                score += 2
 
-    recommendations = []
+        if score > 0:
+            results.append((score, item))
 
-    for idx in indices[0]:
-        assessment = assessments[idx]
-        recommendations.append({
-            "name": assessment["name"],
-            "url": assessment["url"],
-            "test_type": "General"
-        })
+    results.sort(reverse=True, key=lambda x: x[0])
 
-    return recommendations
+    return [item for _, item in results[:10]]
