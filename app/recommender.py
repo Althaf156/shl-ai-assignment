@@ -1,13 +1,14 @@
-def recommend_assessments(query: str, catalog):
+def recommend_assessments(query, catalog):
     query = query.lower()
 
-    tech_keywords = ["net", "dotnet", "backend", "api", "java", "python"]
-    finance_keywords = ["accounting", "finance", "audit", "bookkeeping"]
+    tech_keywords = ["net", "java", "python", "backend", "api"]
+    business_keywords = ["accounting", "finance", "audit"]
 
     results = []
 
     for item in catalog:
         name = item["name"].lower()
+
         score = 0
 
         # base match
@@ -15,17 +16,14 @@ def recommend_assessments(query: str, catalog):
             if word in name:
                 score += 2
 
-        # tech boost
-        if any(t in query for t in tech_keywords) and any(t in name for t in tech_keywords):
-            score += 5
+        # skill boosting
+        if "net" in query or "dotnet" in query:
+            if "net" in name:
+                score += 5
 
-        # finance boost
-        if any(f in query for f in finance_keywords) and any(f in name for f in finance_keywords):
-            score += 5
-
-        # hybrid boost (very important for SHL case)
-        if any(t in name for t in tech_keywords) and any(f in name for f in finance_keywords):
-            score += 3
+        if any(k in query for k in business_keywords):
+            if any(k in name for k in business_keywords):
+                score += 4
 
         if score > 0:
             results.append((score, item))
